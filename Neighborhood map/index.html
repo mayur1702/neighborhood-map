@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Neighbour hood map</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="js/ko.js"></script>
+  <style type="text/css">
+    body {
+      font-family: sans-serif;
+      color: black;
+    }
+
+    .search {
+      width: 100%;
+      margin-top: 10px;
+      height: 30px;
+      color: white;
+      background-color: #323232;
+    }
+
+    .search::-webkit-input-placeholder {
+      color: white;
+    }
+
+    .toggle-sidebar:hover {
+      color: white;
+      cursor: pointer;
+    }
+
+    .sidebar-content:hover {
+      /*background-color: #323232;*/
+      color: white;
+    }
+  </style>
+  <script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="topbar" style="height: 50px;background-color: #323232;">
+    <div class="col-lg-6">
+      <p style="font-size: 18px;padding-top: 10px; padding-left: 10px; color: orange" class="toggle-sidebar" onclick="toggleSidebar()">Toggle Sidebar</p>
+    </div>
+    <div class="col-lg-6"> <input class="search" data-bind="textInput: searchOption, valueUpdate: 'afterkeydown'" placeholder="Search Title or Address" style="color: orange"> </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 container-fluid sidebar" style="height: 100%;  z-index: 999">
+    <div style="padding: 5%; margin: 1%;" style="background-color: rgba(50,50,50,0.9);"> </div>
+    <div style="background-color: rgba(50,50,50,0);">
+      <ul data-bind="foreach: locationsFilter" style="padding-left: 0px; cursor: pointer;">
+        <div data-bind="click: $parent.focus.bind(locations)" style="padding: 2%" class="sidebar-content">
+          <h5 data-bind="text: title" style="font-weight: 700"></h5>
+          <h6 data-bind="text: addr"></h6>
+        </div>
+      </ul>
+    </div>
+  </div>
+  <div class="" id="map" style="height: 100vh; width: 100%; position: absolute;"></div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARx9W2Hp40SGFnpHB7FJtH7mPH41Hfx3E&callback=initMap">
+  </script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
