@@ -37,6 +37,7 @@ var map;
 //define viewmodel of the application
 var viewModel = function() {
   var self = this;
+  var marker;
   //defining infowindow to show description of the place obtained from wikipedia
   var infowindow = new google.maps.InfoWindow();
   //console.log(this);
@@ -85,7 +86,7 @@ var viewModel = function() {
     for (var i = 0; i < locations.length; i++) {
       //console.log( locations[i].lat +" "+ locations[i].lng)
       // adding markers
-      this.marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         map: map,
         position: {
           lat: locations[i].lat,
@@ -98,11 +99,19 @@ var viewModel = function() {
         lng: locations[i].lng,
         id: locations[i].pageid
       });
-      this.markers.push(this.marker);
+      this.markers.push(marker);
       // click event to show infowindow
-      this.marker.addListener('click', function() {
+      marker.addListener('click', markerset);
+    }
+  };
+  function markerset() {
         // console.log(this.content);
-        infowindow.setContent(self.getContent(this.title, this.id, this, i));
+        var that=this;
+        this.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+          that.setAnimation(null);  
+        }, 750);
+        infowindow.setContent(self.getContent(this.title, this.id));
         lati = parseFloat(this.lat) + parseFloat(0.005000);
         lati.toFixed(6);
         infowindow.setPosition({
@@ -110,9 +119,7 @@ var viewModel = function() {
           lng: this.lng
         });
         infowindow.open(map, this.marker);
-      });
-    }
-  };
+      }
   //   infowindow = new google.maps.InfoWindow();
   // called on click of list
   self.focus = function(a) {
